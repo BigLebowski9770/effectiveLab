@@ -6,11 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
@@ -26,9 +30,15 @@ import com.android.marvlabeff.navigation.NavRoute
 import com.android.marvlabeff.ui.theme.*
 import androidx.compose.foundation.layout.Column as Column1
 
+class MarvelItem(
+    val image: Int,
+    val title: String,
+
+)
 
 @Composable
 fun MainScreen(navController: NavHostController) {
+    val lazyListState = rememberLazyListState()
 
 
     Card(
@@ -79,214 +89,253 @@ fun MainScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
 
-
                 ) {
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(GreenForCpt)
-                            .clickable {
-                                navController.navigate(route = NavRoute.Cpt_america.route)
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-
-
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.america),
-                            contentDescription = "Ctp",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-
-                        )
-
-                        Text(
-                            text = "Captain America",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(PinkForDeadpool)
-                            .clickable {
-                                navController.navigate(route = NavRoute.Deadpool.route)
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.deadpool),
-                            contentDescription = "Deadpool",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = "Deadpool",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(ForDoctor)
-                            .clickable {
-                                       navController.navigate(route = NavRoute.Doctor.route)
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.doctor),
-                            contentDescription = "Doctor Strange",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = "Doctor Strange",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(GrayForIronMan)
-                            .clickable {
-                                navController.navigate(route = NavRoute.Iron_man.route)
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.ironman),
-                            contentDescription = "Iron Man",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = "Iron Man",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(RedForSpider)
-                            .clickable {
-                            navController.navigate(route = NavRoute.Spiderman.route)
-                        },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.spiderman),
-                            contentDescription = "Spider Man",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = "Spider Man",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                item {
+                items(
+                    listOf(
+                        MarvelItem(R.drawable.america, "Сpt America", ),
+                        MarvelItem(R.drawable.deadpool, "Deadpool", ),
+                        MarvelItem(R.drawable.doctor, "Doctor Strange", ),
+                        MarvelItem(R.drawable.ironman, "Iron Man", ),
+                        MarvelItem(R.drawable.spiderman, "Spider Man", ),
+                        MarvelItem(R.drawable.thanos, "Thanos", ),
+                        MarvelItem(R.drawable.thor, "Thor",),
+                    )
+                ) { item ->
                     Column1(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Purple200)
                             .clickable {
-                                navController.navigate(route = NavRoute.Thanos.route)
+                                navController.navigate(route = NavRoute.CharScreen.route)
                             },
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
                         Image(
-                            painter = painterResource(R.drawable.thanos),
-                            contentDescription = "Thanos",
+                            painter = painterResource(item.image),
+                            contentDescription = item.title,
                             modifier = Modifier
                                 .size(370.dp)
                                 .padding(5.dp)
+                                .clip(RoundedCornerShape(10))
                         )
 
                         Text(
-                            text = "Thanos",
+                            text = item.title,
                             fontSize = 40.sp,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 }
-
-                item {
-                    Column1(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(BlueForThor)
-                            .clickable {
-                                navController.navigate(route = NavRoute.Thor.route)
-                            },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.thor), contentDescription = "Thor",
-                            modifier = Modifier
-                                .size(370.dp)
-                                .padding(5.dp)
-                        )
-
-                        Text(
-                            text = "Thor",
-                            fontSize = 40.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
             }
-
-
         }
     }
 }
-
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(GreenForCpt)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Cpt_america.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center,
+//
+//
+//                        ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.america),
+//                            contentDescription = "Ctp",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//
+//                        )
+//
+//                        Text(
+//                            text = "Captain America",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(PinkForDeadpool)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Deadpool.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.deadpool),
+//                            contentDescription = "Deadpool",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Deadpool",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(ForDoctor)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Doctor.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.doctor),
+//                            contentDescription = "Doctor Strange",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Doctor Strange",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(GrayForIronMan)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Iron_man.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.ironman),
+//                            contentDescription = "Iron Man",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Iron Man",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(RedForSpider)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Spiderman.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.spiderman),
+//                            contentDescription = "Spider Man",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Spider Man",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(Purple200)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Thanos.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.thanos),
+//                            contentDescription = "Thanos",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Thanos",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//                item {
+//                    Column1(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(BlueForThor)
+//                            .clickable {
+//                                navController.navigate(route = NavRoute.Thor.route)
+//                            },
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                        verticalArrangement = Arrangement.Center
+//                    ) {
+//                        Image(
+//                            painter = painterResource(R.drawable.thor), contentDescription = "Thor",
+//                            modifier = Modifier
+//                                .size(370.dp)
+//                                .padding(5.dp)
+//                        )
+//
+//                        Text(
+//                            text = "Thor",
+//                            fontSize = 40.sp,
+//                            color = Color.White,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//
+//            }
+//
+//
+//        }
+//    }
+//}
 
 
 //@Composable
@@ -304,13 +353,13 @@ fun MainScreen(navController: NavHostController) {
 //}
 
 
-@OptIn(ExperimentalFoundationApi::class)
-@Preview
-@Composable
-fun PreviewMain() {
-    MainScreen(navController = rememberNavController())
-
-}
+//@OptIn(ExperimentalFoundationApi::class)
+//@Preview
+//@Composable
+//fun PreviewMain() {
+//    MainScreen(navController = rememberNavController())
+//
+//}
 
 //@Preview
 //@Composable
